@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI';
+    background: linear-gradient(135deg,#ffe5ec,#fff0f3);
+}
+
+.container {
+    max-width: 380px;
+    margin: auto;
+    padding: 15px;
+}
+
+.card {
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(15px);
+    border-radius: 18px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.title {
+    color: #ff4d6d;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* KADO */
+.gift-wrapper {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.gift-box {
+    width: 100px;
+    height: 80px;
+    background: #ff4d6d;
+    border-radius: 10px;
+    margin: auto;
+    position: relative;
+    cursor: pointer;
+}
+
+.lid {
+    width: 100px;
+    height: 30px;
+    background: #ff4d6d;
+    position: absolute;
+    top: -25px;
+    border-radius: 8px;
+    transform-origin: bottom;
+    transition: 0.5s;
+}
+
+.ribbon {
+    width: 15px;
+    height: 100%;
+    background: gold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.open .lid {
+    transform: rotate(-120deg);
+}
+
+/* FOTO */
+#giftPhoto {
+    width: 100%;
+    border-radius: 12px;
+    display: none;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: 0.6s;
+    box-shadow: 0 0 0px rgba(255,77,109,0);
+}
+
+.show {
+    display: block !important;
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    box-shadow: 0 0 25px rgba(255,77,109,0.6);
+}
+
+/* SPARKLE */
+.sparkle {
+    position: fixed;
+    font-size: 18px;
+    animation: pop 1s ease-out forwards;
+}
+@keyframes pop {
+    0% {transform: scale(0); opacity:1;}
+    100% {transform: scale(2); opacity:0;}
+}
+
+/* SLIDER */
+.slider {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: 1s;
+}
+.slide.active {
+    opacity: 1;
+}
+
+/* TEXT */
+.text-box {
+    max-height: 160px;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    background: black;
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* HEART */
+.heart {
+    position: fixed;
+    color: #ff4d6d;
+    animation: float 4s linear forwards;
+}
+@keyframes float {
+    to { transform: translateY(-100vh); opacity: 0; }
+}
+
+audio { display: none; }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HADIAH -->
+<div class="card">
+    <div class="title">🎁 Hadiah Untuk Kamu</div>
+
+    <div class="gift-wrapper" onclick="openGift()">
+        <div class="gift-box" id="giftBox">
+            <div class="lid"></div>
+            <div class="ribbon"></div>
+        </div>
+    </div>
+
+    <img id="giftPhoto" src="https://i.ibb.co/Nd0z8HDG/IMG-20260422-WA0030.jpg">
+</div>
+
+<!-- KENANGAN -->
+<div class="card">
+    <div class="title">📸 Kenangan Kita</div>
+
+    <div class="slider">
+        <img class="slide active" src="https://i.ibb.co/Kc1dRngb/20260330-083939.jpg">
+        <img class="slide" src="https://i.ibb.co/GfMxM0fL/IMG-20260312-WA0109.jpg">
+        <img class="slide" src="https://i.ibb.co/SX5Vp3yM/20260312-090814.jpg">
+        <img class="slide" src="https://i.ibb.co/Mx8N1bg2/20260226-080625.jpg">
+        <img class="slide" src="https://i.ibb.co/jPjmXMMD/IMG-20251123-WA0162.jpg">
+    </div>
+</div>
+
+<!-- PESAN -->
+<div class="card">
+    <div class="title">💌 Pesan Untuk Kamu</div>
+    <div class="text-box" id="typing"></div>
+</div>
+
+</div>
+
+<!-- AUDIO -->
+<audio id="popSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+
+<audio id="bgMusic" preload="auto" loop>
+    <source src="https://christian-salmon-frwz5xqxgu.edgeone.app/ssstik.io_1776848427515.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// OPEN GIFT
+function openGift() {
+    const box = document.getElementById("giftBox");
+    const photo = document.getElementById("giftPhoto");
+    const music = document.getElementById("bgMusic");
+
+    box.classList.add("open");
+    document.getElementById("popSound").play();
+
+    // PLAY MUSIC + FADE
+    music.volume = 0;
+    music.play().catch(()=>{});
+
+    let vol = 0;
+    let fade = setInterval(()=>{
+        if(vol < 0.5){
+            vol += 0.05;
+            music.volume = vol;
+        } else {
+            clearInterval(fade);
+        }
+    },200);
+
+    sparkle();
+
+    setTimeout(()=>{
+        photo.classList.add("show");
+    },400);
+}
+
+// SPARKLE
+function sparkle(){
+    for(let i=0;i<20;i++){
+        const s=document.createElement("div");
+        s.className="sparkle";
+        s.innerHTML="✨";
+        s.style.left=(Math.random()*100)+"vw";
+        s.style.top=(Math.random()*100)+"vh";
+        document.body.appendChild(s);
+        setTimeout(()=>s.remove(),1000);
+    }
+}
+
+// TYPING
+const text = `Hai kamu...
+
+Mungkin ini cuma hadiah kecil,
+dan mungkin terlihat sederhana.
+
+Tapi di balik itu,
+ada niat yang gak sederhana.
+
+Aku cuma pengen kamu tahu,
+kalau kamu itu selalu kepikiran,
+selalu keinget,
+bahkan di hal-hal kecil sekalipun.
+
+Makanya aku kirim ini,
+bukan karena harus,
+tapi karena aku mau.
+
+Aku mau kamu ngerasa dihargai,
+ngerasa ada yang peduli sama kamu,
+dan ada yang diam-diam
+selalu ngedoain yang terbaik buat kamu.
+
+Foto ini mungkin cuma gambar,
+tapi buat aku,
+ini adalah bagian dari kenangan,
+yang pelan-pelan jadi cerita.
+
+Dan jujur aja...
+aku suka setiap momen yang ada kamu di dalamnya.
+
+Semoga hadiah kecil ini
+bisa bikin kamu senyum,
+walaupun cuma sebentar.
+
+Tapi kalau bisa jujur,
+aku pengen senyum itu
+bertahan lebih lama.
+
+Jaga diri kamu baik-baik ya,
+jangan terlalu capek,
+jangan lupa istirahat.
+
+Dan kalau suatu hari kamu lagi gak baik-baik aja,
+ingat aja...
+
+ada seseorang di sini
+yang selalu berharap kamu bahagia.
+
+Semoga kamu suka ya ❤️`;
+
+let i=0;
+function typing(){
+    if(i<text.length){
+        document.getElementById("typing").innerHTML =
+        text.substring(0,i) + '<span class="cursor"></span>';
+        i++;
+        setTimeout(typing,25);
+    }
+}
+typing();
+
+// SLIDER
+let index=0;
+const slides=document.querySelectorAll(".slide");
+
+setInterval(()=>{
+    slides[index].classList.remove("active");
+    index=(index+1)%slides.length;
+    slides[index].classList.add("active");
+},3000);
+
+// HEART
+function heart(){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+}
+setInterval(heart,400);
+
+</script>
+
+</body>
+</html>
